@@ -31,6 +31,7 @@ class App extends Component {
       <Router>
         <div className="App">
           <NavBar/>
+          <br/><br/>
           { this.state.user ? <div>User: {this.state.user.name}</div> : null }
           <Route path="/RegistrationPage" component={RegistrationPage}/>
           <Route path="/LoginPage/:reason?" component={LoginPage}/>
