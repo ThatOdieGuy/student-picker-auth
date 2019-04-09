@@ -1,7 +1,11 @@
-.navlink:visited { 
+.navlink, .navlink:visited { 
   color: grey;
 }
 
 .selected, .selected:visited {
   color: black;
+}
+
+a {
+  padding: 5px;
 }
