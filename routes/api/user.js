@@ -70,6 +70,18 @@ router.post("/register", (req, res) => {
   });
 })
 
+router.post("/logout", (req, res) => {
+  // Destroy the session so there's no longer any user data held
+  //  A new session will be generated for the user on their next request
+  req.session.destroy();
+
+  // Clear our auth cookies
+  res.clearCookie("user_id");
+  res.clearCookie("auth_token");
+
+  res.json({ success: true });
+})
+
 router.get("/getUser", authMiddleware, (req, res) => {
   db.Users.findOne({ where: { user_id: req.session.user_id }}).then(user => {
     // Don't want to send all the data.
