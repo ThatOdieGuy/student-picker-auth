@@ -16,6 +16,7 @@ router.post("/login", (req, res) => {
           throw new Error("Username not found");
         }
 
+        // See if the password hash matches what we have in the database
         if (!bcrypt.compareSync(password, user.pass_hash)) {
           throw new Error("Password invalid");
         }
@@ -37,23 +38,21 @@ router.post("/login", (req, res) => {
         res.cookie("user_id", user.id);
         res.cookie("auth_token", authToken);
 
-        //req.session.userId = 345235;
-        
+        // Good to go, let the client know
         res.json({ loggedIn: true });
       } catch(err) {
         res.status(401).json({ error: err.message });
       }
     }
   )
-
-
 });
 
 router.post("/register", (req, res) => {
   const { username, password } = req.body;
 
   console.log("registering", username, password);
-  // TODO: Validate username & password
+
+  // TODO: Validate username & password. Make sure they're long enough / secure enough
   
   // Hash password so nobody can look at the database and get your password
   let passHash = bcrypt.hashSync(password, 10);
