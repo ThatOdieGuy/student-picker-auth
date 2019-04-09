@@ -1,0 +1,7 @@
+.navlink:visited { 
+  color: grey;
+}
+
+.selected, .selected:visited {
+  color: black;
+}

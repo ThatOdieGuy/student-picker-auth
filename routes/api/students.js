@@ -1,0 +1,36 @@
+const router = require("express").Router();
+const db = require("../../models");
+const authMiddleware = require("./authMiddleware");
+
+// Route: GET /api/students
+router.get("/", authMiddleware, (req, res) => {
+  // authMiddleware will verify our our user authentication
+  //  req.session.user_id will hold the id of the logged in user
+
+  const query = { 
+    where: { user_id: req.session.user_id } 
+  }
+
+  db.Students.findAll(query).then(students => {
+    res.json(students);
+  });
+})
+
+// Route: POST /api/students/add
+router.post("/add", authMiddleware, (req, res) => {
+    // authMiddleware will verify our our user authentication
+  //  req.session.user_id will hold the id of the logged in user
+  
+  const student = req.body.student;
+  
+  console.log("Adding a new student");
+
+  db.Students.create({ student: student, user_id: req.session.user_id }).then(() => {
+    //Created new student!
+    
+    res.json({ studentReceived: student });
+  })
+
+});
+
+module.exports = router;
