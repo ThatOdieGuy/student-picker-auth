@@ -9,8 +9,12 @@ class LoginBox extends React.Component {
   login = (e) => {
     e.preventDefault();
 
-    loginController.login(this.state.username, this.state.password, user => {
-      this.props.history.push("/UserHomePage");
+    loginController.login(this.state.username, this.state.password, (err, user) => {
+      if (err) {
+        this.setState({ error: err });
+      } else {
+        this.props.history.push("/UserHomePage");
+      }
     });
   }
 
