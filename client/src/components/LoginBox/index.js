@@ -1,15 +1,17 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter } from 'react-router-dom';
 
 import loginController from '../../controllers/LoginController';
 
-export default class LoginBox extends React.Component {
+class LoginBox extends React.Component {
   state = { username: "", password: "", error: null, loggedIn: false }
 
   login = (e) => {
     e.preventDefault();
 
-    loginController.login(this.state.username, this.state.password);
+    loginController.login(this.state.username, this.state.password, user => {
+      this.props.history.push("/UserHomePage");
+    });
   }
 
   inputChanged = event => {
@@ -31,3 +33,5 @@ export default class LoginBox extends React.Component {
     )
   }
 }
+
+export default withRouter(LoginBox);
