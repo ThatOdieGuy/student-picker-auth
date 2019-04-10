@@ -1,6 +1,7 @@
 import React from 'react';
-import axios from 'axios';
 import { Redirect } from 'react-router-dom';
+
+import loginController from '../../controllers/LoginController';
 
 export default class LoginBox extends React.Component {
   state = { username: "", password: "", error: null, loggedIn: false }
@@ -8,26 +9,12 @@ export default class LoginBox extends React.Component {
   login = (e) => {
     e.preventDefault();
 
-    const postData = { username: this.state.username, password: this.state.password };
-
-    axios.post("/api/user/login", postData)
-      .then(response => {
-          // Got here, we should have a cookie set and can go forward
-          console.log("User logged in");
-
-          this.setState({ loggedIn: true });
-        })
-      .catch(err => {
-        let message = err.response.data.error || "Unable to login";
-
-        this.setState({ error: message });
-      })
+    loginController.login(this.state.username, this.state.password);
   }
 
   inputChanged = event => {
     this.setState({ [event.target.name]: event.target.value });
   }
-
 
   render() {
     if (this.state.loggedIn) {
