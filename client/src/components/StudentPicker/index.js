@@ -33,6 +33,7 @@ export default class StudentPicker extends Component {
   render() {
     return (
       <div>
+        <h1>Student Picker</h1>
         <SelectedStudent students={this.state.students}/>
         <StudentList students={this.state.students}/>
         <AddStudent afterAddCallback={this.updateStudents}/>

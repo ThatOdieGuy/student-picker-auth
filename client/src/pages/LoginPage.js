@@ -9,6 +9,7 @@ export default class LoginPage extends React.Component {
     return (
       <div>
         <br/>
+        Login Page
         <br/>
         { newUser && <div>Your account has been created. Login to continue</div> }
         <br/>
