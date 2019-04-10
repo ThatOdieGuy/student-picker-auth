@@ -1,27 +1,26 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import axios from 'axios';
 import { withRouter } from "react-router";
 
 import "./NavBar.css";
 
-// TODO: Highlight these links
-
 function NavBar(props) {
   function logoutCheck() {
     if (window.confirm("Logout of this account?")) {
-      axios.post("/api/user/logout").then(response => {
+      props.loginController.logout(() => {
         props.history.push("/");
       })
     }
   }
+  const user = props.loginController.user;
 
   return (
     <div>
-      <NavLink to="/RegistrationPage" className="navlink" activeClassName="selected">Registration Page</NavLink>
-      <NavLink to="/LoginPage" className="navlink" activeClassName="selected">Login Page</NavLink>
-      <NavLink to="/UserHomePage" className="navlink" activeClassName="selected">User Home Page</NavLink>
-      <a href="#" className="navlink" onClick={logoutCheck}>Logout</a>
+      {!user && <NavLink to="/RegistrationPage" className="navlink" activeClassName="selected">Registration Page</NavLink>}
+      {!user && <NavLink to="/LoginPage" className="navlink" activeClassName="selected">Login Page</NavLink>}
+
+      {user && <NavLink to="/UserHomePage" className="navlink" activeClassName="selected">User Home Page</NavLink>}
+      {user && <a href="#" className="navlink" onClick={logoutCheck}>Logout</a>}
     </div>
   )
 }
