@@ -1,6 +1,7 @@
 import axios from "axios";
 
 class LoginController {
+  // This is a list of callbacks that are remembered for when the user changes. (login/logout)
   userChangedListeners = [];
 
   user = null;
