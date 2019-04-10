@@ -39,7 +39,7 @@ router.post("/login", (req, res) => {
         res.cookie("auth_token", authToken);
 
         // Good to go, let the client know
-        res.json({ loggedIn: true });
+        res.json({ user: user });
       } catch(err) {
         res.status(401).json({ error: err.message });
       }
@@ -82,13 +82,9 @@ router.post("/logout", (req, res) => {
 })
 
 router.get("/getUser", authMiddleware, (req, res) => {
-  db.Users.findOne({ where: { user_id: req.session.user_id }}).then(user => {
-    // Don't want to send all the data.
-    const userData = {
-      id: user.id,
-      username: user.username,
-    }
-    res.send({ user: userData });
+  db.Users.findOne({ where: { id: req.session.user_id }}).then(user => {
+    // This either worked, or we'll send down null. 
+    res.send({ user: user });
   })
 });
 
