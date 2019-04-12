@@ -1,15 +1,26 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 export default class StudentList extends React.Component {
-  state = { selectedStudent: "" }
-
   render() {
     return (
       <div>
         <ul>
-          {this.props.students.map(student => <li key={student}>{student}</li>)}
+          {/* Create a StudentListItem for every student in this.props.student */}
+          {this.props.students.map(student =>
+            <StudentListItem key={student} student={student}/>
+          )}
         </ul>
       </div>
     );
   }
+}
+
+// Just a simple component I put in the same file to render each student in the list
+function StudentListItem(props) {
+  return (
+    <li>
+      {props.student} - <Link to={"/StudentEditPage/" + props.student}>Edit</Link>
+    </li>
+  )
 }

@@ -8,7 +8,7 @@ import LoginPage from "./pages/LoginPage";
 import RegistrationPage from "./pages/RegistrationPage";
 import UserHomePage from "./pages/UserHomePage";
 import FrontPage from "./pages/FrontPage";
-
+import StudentEditPage from "./pages/StudentEditPage";
 import loginController from "./controllers/LoginController"
 
 /**
@@ -37,6 +37,7 @@ class App extends Component {
   render() {
     return (
       <Router>
+      
         <div className="App">
           <NavBar loginController={loginController}/>
           <br/><br/>
@@ -45,10 +46,14 @@ class App extends Component {
             {!this.state.user && <Route path="/RegistrationPage" component={RegistrationPage}/>}            
             {!this.state.user && <Route path="/LoginPage/:reason?" component={LoginPage}/>}
             {this.state.user && <Route path="/UserHomePage" component={UserHomePage}/>}
+            
+            <Route path="/StudentEditPage/:student" component={StudentEditPage}/>
+
             {!this.state.user && <Route exact path="/" component={FrontPage}/>}
           </Switch>
-
+         
         </div>
+      
       </Router>
     );
   }

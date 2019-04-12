@@ -29,8 +29,17 @@ router.post("/add", authMiddleware, (req, res) => {
     //Created new student!
     
     res.json({ studentReceived: student });
-  })
+  });
+});
 
+router.post("/edit", authMiddleware, (req, res) => {
+  let originalStudentName = req.body.originalStudentName;
+  let newStudentName = req.body.newStudentName;
+  db.Students.update(
+    { student: newStudentName }, 
+    { where: { student: originalStudentName }}).then(() => {
+      res.json({ success: true });
+    });
 });
 
 module.exports = router;
