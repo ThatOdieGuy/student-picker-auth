@@ -21,22 +21,8 @@ router.post("/login", (req, res) => {
           throw new Error("Password invalid");
         }
 
-        // This is not super secure, but a random token is all we need right now.
-        const authToken = Math.random();
-
-        // Now do two things
-        //  1. Set the user information in our session. This gets stored in the db.
-        //  2. Set the user information in our cookie. This gets stored on the client side.
-        // When the client sends another request to the server, 
-        //  we with validate that the session and cookie info match using authMiddleware
-
-        // Update session with our auth info      
-        req.session.user_id = user.id;
-        req.session.auth_token = authToken;
-
-        // Send back cookie
-        res.cookie("user_id", user.id);
-        res.cookie("auth_token", authToken);
+        // User is validated, this will mark them as logged in for this session:
+        logInUserForSession(user, req, res);
 
         // Good to go, let the client know
         res.json({ user: user });
@@ -46,6 +32,25 @@ router.post("/login", (req, res) => {
     }
   )
 });
+
+logInUserForSession = (user, req, res) => {
+  // This is not super secure, but a random token is all we need right now.
+  const authToken = Math.random();
+
+  // Now do two things
+  //  1. Set the user information in our session. This gets stored in the db.
+  //  2. Set the user information in our cookie. This gets stored on the client side.
+  // When the client sends another request to the server, 
+  //  we with validate that the session and cookie info match using authMiddleware
+
+  // Update session with our auth info      
+  req.session.user_id = user.id;
+  req.session.auth_token = authToken;
+
+  // Send back cookie
+  res.cookie("user_id", user.id);
+  res.cookie("auth_token", authToken);
+}
 
 router.post("/register", (req, res) => {
   const { username, password } = req.body;
@@ -64,8 +69,12 @@ router.post("/register", (req, res) => {
       return;
     }
 
+    // If you want to also log the user in at this step:
+    // logInUserForSession(user, req, res);
+    // res.json({ success: true, user: user });
+
     // Don't authenticate just yet, just tell the client this worked ok.
-    res.json({ success: true });
+    //res.json({ success: true });
   });
 })
 
