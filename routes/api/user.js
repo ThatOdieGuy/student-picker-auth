@@ -70,8 +70,8 @@ router.post("/register", (req, res) => {
     }
 
     // If you want to also log the user in at this step:
-    // logInUserForSession(user, req, res);
-    // res.json({ success: true, user: user });
+    logInUserForSession(user, req, res);
+    res.json({ success: true, user: user });
 
     // Don't authenticate just yet, just tell the client this worked ok.
     //res.json({ success: true });
