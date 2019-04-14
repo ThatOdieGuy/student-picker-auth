@@ -11,6 +11,9 @@ import loginController from "../controllers/LoginController";
  * Usage example:
  *  `function MyReactComponent(props) { return this.props.user && <div>{this.props.user.username}</div> }`
  *  `export default withUserAuth(MyReactComponent)`
+ * 
+ *  This is a High-Order Component (HOC)
+ *    https://reactjs.org/docs/higher-order-components.html
  */
 export default function withUserAuth(WrappedComponent) {
   return class UserAuthWrapper extends React.Component {
