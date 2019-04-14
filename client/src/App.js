@@ -18,14 +18,18 @@ class App extends Component {
   state = { user: null }
 
   componentDidMount() {
-    console.log("componentDidMount");
+    console.log("App componentDidMount");
+
+    // Register to be notified when loginController.user changes
     loginController.addUserChangedListener(this.setUser);
 
     loginController.recheckLogin();
   }
 
   componentWillUnmount() {
-    console.log("WillUnmount");
+    console.log("App componentWillUnmount");
+
+    // Unregister from this listener or else loginController will hold onto this dead component
     loginController.removeUserChangedListener(this.setUser);
   }
 
