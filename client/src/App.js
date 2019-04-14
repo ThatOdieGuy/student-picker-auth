@@ -9,6 +9,7 @@ import RegistrationPage from "./pages/RegistrationPage";
 import UserHomePage from "./pages/UserHomePage";
 import FrontPage from "./pages/FrontPage";
 import StudentEditPage from "./pages/StudentEditPage";
+import UserNameDisplay from "./components/UserNameDisplay";
 import loginController from "./controllers/LoginController"
 
 /**
@@ -43,9 +44,11 @@ class App extends Component {
       <Router>
       
         <div className="App">
-          <NavBar loginController={loginController}/>
+          <NavBar/>
           <br/><br/>
-          { this.state.user ? <div>User: {this.state.user.username}</div> : null }
+          
+          <UserNameDisplay/>
+
           <Switch>
             {!this.state.user && <Route path="/RegistrationPage" component={RegistrationPage}/>}            
             {!this.state.user && <Route path="/LoginPage/:reason?" component={LoginPage}/>}
