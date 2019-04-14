@@ -20,7 +20,7 @@ class LoginController {
           afterLoginCallback && afterLoginCallback(null, user);
         })
       .catch(err => {
-        console.log(err);
+        console.log("Login error", err);
         // The error might have come from the server, or thrown by the client
         let errorMessage = (err.response && err.response.data.error) || "Unable to login";
 
